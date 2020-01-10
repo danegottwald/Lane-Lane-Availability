@@ -10,6 +10,23 @@ PFont font;
 byte laneArr[] = new byte[56];
 byte lane = 0;
 
+int lane_1[] = new int[55];
+int lane_2[] = new int[55];
+int lane_3[] = new int[55];
+int lane_4[] = new int[55];
+int lane_5[] = new int[55];
+int lane_6[] = new int[55];
+int lane_7[] = new int[55];
+int lane_8[] = new int[55];
+int lane_9[] = new int[55];
+int lane_10[] = new int[55];
+int lane_11[] = new int[55];
+int lane_12[] = new int[55];
+int lane_13[] = new int[55];
+int lane_14[] = new int[55];
+int lane_15[] = new int[55];
+int lane_16[] = new int[55];
+
 String textVal = "Select Lane";
 
 void setup() {
@@ -40,7 +57,7 @@ void draw() {
 void createMainMenu() {
   cp5 = new ControlP5(this);
   for (int i = 0; i < 8; i++) {
-    cp5.addButton("Lane" + char(49+i))
+  cp5.addButton("Lane" + char(49+i))
     .setFont(font)
     .setPosition(125 + (i*100), 75)
     .setColorActive(color(0, 155, 0))
@@ -88,7 +105,6 @@ void timeCheckBoxes() {
     .addItem("6:00", 1800) .addItem("6:15", 1815) .addItem("6:30", 1830) .addItem("6:45", 1845) .addItem("7:00", 1900);
     checkbox.setColorLabels(color(255, 255, 255));
     checkbox.setColorActive(color(0, 155, 0));
-    checkbox.deactivateAll();
 }
 
 void Submit() {
@@ -99,6 +115,7 @@ void Submit() {
       laneArr[i+1] = byte(checkbox.getState(i));
       println(byte(checkbox.getState(i)));
     }
+    checkArr(laneArr);
     port.write(laneArr);
     println("Done");
     checkbox.deactivateAll();
@@ -107,82 +124,179 @@ void Submit() {
   }
 }
 
+void checkArr(byte arr[]) {
+  if (arr[0] == 1) {
+    fillArray(lane_1);
+  }
+  else if (arr[0] == 2) {
+    fillArray(lane_2);
+  }  
+  else if (arr[0] == 3) {
+    fillArray(lane_3);
+  }  
+  else if (arr[0] == 4) {
+    fillArray(lane_4);
+  } 
+  else if (arr[0] == 5) {
+    fillArray(lane_5);
+  } 
+  else if (arr[0] == 6) {
+    fillArray(lane_6);
+  } 
+  else if (arr[0] == 7) {
+    fillArray(lane_7);
+  } 
+  else if (arr[0] == 8) {
+    fillArray(lane_8);
+  } 
+  else if (arr[0] == 9) {
+    fillArray(lane_9);
+  } 
+  else if (arr[0] == 10) {
+    fillArray(lane_10);
+  } 
+  else if (arr[0] == 11) {
+    fillArray(lane_11);
+  } 
+  else if (arr[0] == 12) {
+    fillArray(lane_12);
+  } 
+  else if (arr[0] == 13) {
+    fillArray(lane_13);
+  } 
+  else if (arr[0] == 14) {
+    fillArray(lane_14);
+  } 
+  else if (arr[0] == 15) {
+    fillArray(lane_15);
+  } 
+  else if (arr[0] == 16) {
+    fillArray(lane_16);
+  } 
+}
+
+void fillArray(int arr[]) {
+  for (int i = 0; i < 55; i++) {
+    arr[i] = laneArr[i+1];
+  }
+}
+
+void activateBoxes(int arr[]) {
+  for (int i = 0; i < arr.length; i++) {
+    if (arr[i] != 0) {
+      checkbox.activate(i);
+    }
+  }
+}
+
 void Lane1() {
+  checkbox.deactivateAll();
   lane = 1;
   textVal = "Lane 1";
+  activateBoxes(lane_1);
 }
 
 void Lane2() {
+  checkbox.deactivateAll();
   lane = 2;
   textVal = "Lane 2";
+  activateBoxes(lane_2);
 }
 
 void Lane3() {
+  checkbox.deactivateAll();
   lane = 3;
   textVal = "Lane 3";
+  activateBoxes(lane_3);
 }
 
 void Lane4() {
+  checkbox.deactivateAll();
   lane = 4;
   textVal = "Lane 4";
+  activateBoxes(lane_4);
 }
 
 void Lane5() {
+  checkbox.deactivateAll();
   lane = 5;
   textVal = "Lane 5";
+  activateBoxes(lane_5);
 }
 
 void Lane6() {
+  checkbox.deactivateAll();
   lane = 6;
   textVal = "Lane 6";
+  activateBoxes(lane_6);
 }
 
 void Lane7() {
+  checkbox.deactivateAll();
   lane = 7;
   textVal = "Lane 7";
+  activateBoxes(lane_7);
 }
 
 void Lane8() {
+  checkbox.deactivateAll();
   lane = 8;
   textVal = "Lane 8";
+  activateBoxes(lane_8);
 }
 
 void Lane9() {
+  checkbox.deactivateAll();
   lane = 9;
   textVal = "Lane 9";
+  activateBoxes(lane_9);
 }
 
 void Lane10() {
+  checkbox.deactivateAll();
   lane = 10;
   textVal = "Lane 10";
+  activateBoxes(lane_10);
 }
 
 void Lane11() {
+  checkbox.deactivateAll();
   lane = 11;
   textVal = "Lane 11";
+  activateBoxes(lane_11);
 }
 
 void Lane12() {
+  checkbox.deactivateAll();
   lane = 12;
   textVal = "Lane 12";
+  activateBoxes(lane_12);
 }
 
 void Lane13() {
+  checkbox.deactivateAll();
   lane = 13;
   textVal = "Lane 13";
+  activateBoxes(lane_13);
 }
 
 void Lane14() {
+  checkbox.deactivateAll();
   lane = 14;
   textVal = "Lane 14";
+  activateBoxes(lane_14);
 }
 
 void Lane15() {
+  checkbox.deactivateAll();
   lane = 15;
   textVal = "Lane 15";
+  activateBoxes(lane_15);
 }
 
 void Lane16() {
+  checkbox.deactivateAll();
   lane = 16;
   textVal = "Lane 16";
+  activateBoxes(lane_16);
 }
