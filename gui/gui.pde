@@ -5,40 +5,46 @@ Serial port;
 
 ControlP5 cp5;
 CheckBox checkbox;
-PFont font;
+PFont font, bFont;
 
-byte laneArr[] = new byte[56];
+int LANE_TIMES = 54;
+
+byte laneArr[] = new byte[LANE_TIMES+1];
 byte lane = 0;
 
-int lane_1[] = new int[55];
-int lane_2[] = new int[55];
-int lane_3[] = new int[55];
-int lane_4[] = new int[55];
-int lane_5[] = new int[55];
-int lane_6[] = new int[55];
-int lane_7[] = new int[55];
-int lane_8[] = new int[55];
-int lane_9[] = new int[55];
-int lane_10[] = new int[55];
-int lane_11[] = new int[55];
-int lane_12[] = new int[55];
-int lane_13[] = new int[55];
-int lane_14[] = new int[55];
-int lane_15[] = new int[55];
-int lane_16[] = new int[55];
+byte lane_1[]  = new byte[LANE_TIMES];
+byte lane_2[]  = new byte[LANE_TIMES];
+byte lane_3[]  = new byte[LANE_TIMES];
+byte lane_4[]  = new byte[LANE_TIMES];
+byte lane_5[]  = new byte[LANE_TIMES];
+byte lane_6[]  = new byte[LANE_TIMES];
+byte lane_7[]  = new byte[LANE_TIMES];
+byte lane_8[]  = new byte[LANE_TIMES];
+byte lane_9[]  = new byte[LANE_TIMES];
+byte lane_10[] = new byte[LANE_TIMES];
+byte lane_11[] = new byte[LANE_TIMES];
+byte lane_12[] = new byte[LANE_TIMES];
+byte lane_13[] = new byte[LANE_TIMES];
+byte lane_14[] = new byte[LANE_TIMES];
+byte lane_15[] = new byte[LANE_TIMES];
+byte lane_16[] = new byte[LANE_TIMES];
 
 String textVal = "Select Lane";
 
+boolean startUp = true;
+
 void setup() {
-  size(1000, 500);
+  size(1050, 500);
+  smooth();
   surface.setTitle("Lap Lane Availability");
   
   printArray(Serial.list());
   
-  port = new Serial(this, "COM4", 9600);  // "..." might change depending on PC
-  font = createFont("calibri light", 14);
-  createMainMenu();
-    
+  port = new Serial(this, Serial.list()[1], 9600);  // Serial list index might change depending on PC
+  font = createFont("Calibri", 13);
+  bFont = createFont("Calibri", 16);
+  
+  createMainMenu(); 
 }
 
 // NOTE: Possibly add a "if weekday or weekend button to limit amount of possible lanes and times! :)
@@ -46,52 +52,50 @@ void setup() {
 void draw() {
   background(100, 100, 100);
   fill(0, 0, 0);
-  textFont(font);
+  textSize(40);
+  textAlign(CENTER);
+  text("Lap Lane Availability", 525, 50);
   textSize(30);
-  text("Today's Lane Availability", 375, 50);
-  text(textVal, 460, 245);
-  text("GREEN  - OPEN", 200, 445);
-  text("RED   - CLOSED", 200, 475);
+  text(textVal, 525, 250);
+  if (startUp == false) {
+    text("GREEN  -  OPEN", 150, 440);
+    text("RED  -  CLOSED", 150, 480);
+  }
 }
 
 void createMainMenu() {
+  int buttonSize = 60;
   cp5 = new ControlP5(this);
+  cp5.setFont(font);
+  cp5.setColorActive(color(0, 155, 0));
   for (int i = 0; i < 8; i++) {
-  cp5.addButton("Lane" + char(49+i))
-    .setFont(font)
-    .setPosition(125 + (i*100), 75)
-    .setColorActive(color(0, 155, 0))
-    .setSize(50, 50);
+    cp5.addButton("Lane" + char(49+i))
+      .setFont(bFont)
+      .setPosition(150 + (i*100), 75)
+      .setSize(buttonSize, 55);
   }
   cp5.addButton("Lane9")
-    .setFont(font)
-    .setPosition(125, 150)
-    .setColorActive(color(0, 155, 0))
-    .setSize(50, 50);
+    .setFont(bFont)
+    .setPosition(150, 150)
+    .setSize(buttonSize, 55);
   for (int i = 0; i < 7; i++) {
     cp5.addButton("Lane1" + char(48+i))
-    .setFont(font)
-    .setPosition(225 + (i*100), 150)
-    .setColorActive(color(0, 155, 0))
-    .setSize(50, 50);
+      .setFont(bFont)
+      .setPosition(250 + (i*100), 150)
+      .setSize(buttonSize, 55);
   }
-  cp5.addButton("Submit")
-    .setFont(font)
-    .setPosition(450, 425)
-    .setSize(100, 50);
   timeCheckBoxes();
 }
 
 void timeCheckBoxes() { 
   checkbox = cp5.addCheckBox("checkbox")
     .showLabels()
-    .setPosition(50, 275)
+    .setPosition(8, 275)
     .setSize(20, 20)
     .setItemsPerRow(18)
-    .setSpacingColumn(30)
+    .setSpacingColumn(38)
     .setSpacingRow(30)
-    .setColorBackground(color(150, 0, 0))
-    .setFont(font)
+    .setColorBackground(color(140, 0, 0))
     .addItem("05:30", 530) .addItem("05:45", 545) .addItem("06:00", 600) .addItem("06:15", 615) .addItem("06:30", 630)
     .addItem("06:45", 645) .addItem("07:00", 700) .addItem("07:15", 715) .addItem("07:30", 730) .addItem("07:45", 745)
     .addItem("08:00", 800) .addItem("08:15", 815) .addItem("08:30", 830) .addItem("08:45", 845) .addItem("09:00", 900)
@@ -102,16 +106,17 @@ void timeCheckBoxes() {
     .addItem("2:15", 1415) .addItem("2:30", 1430) .addItem("2:45", 1445) .addItem("3:00", 1500) .addItem("3:15", 1515)
     .addItem("3:30", 1530) .addItem("3:45", 1545) .addItem("4:00", 1600) .addItem("4:15", 1645) .addItem("4:30", 1630)
     .addItem("4:45", 1645) .addItem("5:00", 1700) .addItem("5:15", 1715) .addItem("5:30", 1730) .addItem("5:45", 1745)
-    .addItem("6:00", 1800) .addItem("6:15", 1815) .addItem("6:30", 1830) .addItem("6:45", 1845) .addItem("7:00", 1900);
+    .addItem("6:00", 1800) .addItem("6:15", 1815) .addItem("6:30", 1830) .addItem("6:45", 1845);
     checkbox.setColorLabels(color(255, 255, 255));
     checkbox.setColorActive(color(0, 155, 0));
+    checkbox.hide();
 }
 
 void Submit() {
   if (textVal != "Select Lane") {
     println(lane);
     laneArr[0] = lane;
-    for(int i = 0; i < 55; i++) {
+    for(int i = 0; i < LANE_TIMES; i++) {
       laneArr[i+1] = byte(checkbox.getState(i));
       println(byte(checkbox.getState(i)));
     }
@@ -175,18 +180,79 @@ void checkArr(byte arr[]) {
   } 
 }
 
-void fillArray(int arr[]) {
-  for (int i = 0; i < 55; i++) {
+void fillArray(byte arr[]) {
+  for (int i = 0; i < LANE_TIMES; i++) {
     arr[i] = laneArr[i+1];
   }
 }
 
-void activateBoxes(int arr[]) {
+void activateBoxes(byte arr[]) {
   for (int i = 0; i < arr.length; i++) {
     if (arr[i] != 0) {
       checkbox.activate(i);
     }
   }
+}
+
+void extraButtons() {
+  startUp = false;
+  checkbox.show();
+  cp5.addButton("All")
+    .setFont(bFont)
+    .setPosition(20, 225)
+    .setSize(30, 25);
+  cp5.addButton("Saturday")
+    .setFont(bFont)
+    .setPosition(60, 225)
+    .setSize(80, 25);
+  cp5.addButton("Sunday")
+    .setFont(bFont)
+    .setPosition(150, 225)
+    .setSize(70, 25);
+  cp5.addButton("None")
+    .setFont(bFont)
+    .setPosition(230, 225)
+    .setSize(50, 25);  
+  cp5.addButton("Submit")
+    .setFont(bFont)
+    .setPosition(460, 425)
+    .setSize(130, 50);
+}
+
+void controlEvent(ControlEvent theEvent) {
+  if (theEvent.isController()) {
+    if (startUp == true) {
+      extraButtons();
+    }
+  }
+}
+
+void All() {
+  if (textVal != "Select Lane") {
+    checkbox.activateAll();
+  }
+}
+
+void Saturday() {
+  if (textVal != "Select Lane") {
+    checkbox.deactivateAll();
+    for (int i = 6; i < 45; i++) {
+      checkbox.activate(i);
+    }
+  }
+}
+
+void Sunday() {
+  if (textVal != "Select Lane") {
+    checkbox.deactivateAll();
+    for (int i = 10; i < 45; i++) {
+      checkbox.activate(i);
+    }
+  }
+}
+
+void None() {
+  checkbox.deactivateAll();
 }
 
 void Lane1() {
@@ -225,6 +291,9 @@ void Lane5() {
 }
 
 void Lane6() {
+  if (startUp == true) {
+   extraButtons();
+  }
   checkbox.deactivateAll();
   lane = 6;
   textVal = "Lane 6";
