@@ -37,10 +37,15 @@ void setup() {
 void loop() {
   t = now();
   while (Serial.available() > 0) {
-    delay(100);
-    fillArray();
-    if (currentTimeTick >= 0 && currentTimeTick < 54) {
-      changeLights();
+    if (Serial.read() == 'H') {
+      Serial.write('H');
+    }
+    else {
+      delay(100);
+      fillArray();
+      if (currentTimeTick >= 0 && currentTimeTick < 54) {
+        changeLights();
+      }
     }
   }
   printTime();
