@@ -32,7 +32,6 @@ byte lane_16[] = new byte[LANE_TIMES];
 String textVal = "Select Lane";
 
 boolean startUp = true;
-
 void setup() {
   size(1050, 500);
   smooth();
@@ -58,8 +57,9 @@ void draw() {
   textSize(30);
   text(textVal, 525, 250);
   if (startUp == false) {
-    text("GREEN  -  OPEN", 150, 440);
-    text("RED  -  CLOSED", 150, 480);
+    textSize(20);
+    text("GREEN means OPENS at that time", 165, 440);
+    text("RED means CLOSES at that time", 165, 480);
   }
 }
 
@@ -236,7 +236,7 @@ void All() {
 void Saturday() {
   if (textVal != "Select Lane") {
     checkbox.deactivateAll();
-    for (int i = 6; i < 45; i++) {
+    for (int i = 6; i < 46; i++) {
       checkbox.activate(i);
     }
   }
@@ -245,7 +245,7 @@ void Saturday() {
 void Sunday() {
   if (textVal != "Select Lane") {
     checkbox.deactivateAll();
-    for (int i = 10; i < 45; i++) {
+    for (int i = 10; i < 46; i++) {
       checkbox.activate(i);
     }
   }
