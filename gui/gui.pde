@@ -32,29 +32,16 @@ byte lane_16[] = new byte[LANE_TIMES];
 String textVal = "Select Lane";
 
 boolean startUp = true;
+
 void setup() {
   size(1050, 500);
   smooth();
   surface.setTitle("Lap Lane Availability");
-  
-  int counter = 0;
   printArray(Serial.list());
-  port = new Serial(this, Serial.list()[counter], 9600);
-  port.write(65);
-  while (port.read() != 'A') {
-    counter++;
-    port.stop();
-    port = new Serial(this, Serial.list()[counter], 9600);
-    port.write(65);  // Send 65 (ASCII value for 'A') to Arduino
-    if (counter == Serial.list().length - 1) {
-      break;
-    }
-  }
-  println("Connected to " + Serial.list()[counter]);
-  
+  port = new Serial(this, Serial.list()[Serial.list().length - 1], 9600);
+  println("Successfully connected to Port: " + Serial.list()[Serial.list().length - 1]);
   font = createFont("Calibri", 13);
   bFont = createFont("Calibri", 16);
-  
   createMainMenu(); 
 }
 
@@ -124,15 +111,16 @@ void timeCheckBoxes() {
 
 void Submit() {
   if (textVal != "Select Lane") {
-    println(lane);
+    println("\n" + "Lane: " + lane);
     laneArr[0] = lane;
     for(int i = 0; i < LANE_TIMES; i++) {
       laneArr[i+1] = byte(checkbox.getState(i));
-      println(byte(checkbox.getState(i)));
+      print(byte(checkbox.getState(i)) + ", ");
+      if ((i+1) % 18 == 0) println();
     }
     checkArr(laneArr);
     port.write(laneArr);
-    println("Done");
+    println("Lane " + laneArr[0] + " submitted.");
     checkbox.deactivateAll();
     lane = 0;
     textVal = "Select Lane";
