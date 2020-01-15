@@ -39,14 +39,25 @@ void setup() {
   
   printArray(Serial.list());
   
-  port = new Serial(this, Serial.list()[1], 9600);  // Serial list index might change depending on PC
+  int counter = 0;
+  port = new Serial(this, Serial.list()[counter], 9600);
+  port.write(65);
+  while (port.read() != 'A') {
+    counter++;
+    port.stop();
+    port = new Serial(this, Serial.list()[counter], 9600);
+    port.write(65);  // Send 65 (ASCII value for 'A') to Arduino
+    if (counter == Serial.list().length - 1) {
+      break;
+    }
+  }
+  println("Connected to " + Serial.list()[counter]);
+  
   font = createFont("Calibri", 13);
   bFont = createFont("Calibri", 16);
   
   createMainMenu(); 
 }
-
-// NOTE: Possibly add a "if weekday or weekend button to limit amount of possible lanes and times! :)
 
 void draw() {
   background(100, 100, 100);

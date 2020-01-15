@@ -37,10 +37,16 @@ void setup() {
 void loop() {
   t = now();
   while (Serial.available() > 0) {
-    delay(100);
-    fillArray();
-    if (currentTimeTick >= 0 && currentTimeTick < 54) {
-      changeLights();
+    digitalWrite(2, HIGH);
+    if (Serial.read() == 'A') {
+      Serial.write(65);
+    }
+    else {
+      delay(100);
+      fillArray();
+      if (currentTimeTick >= 0 && currentTimeTick < 54) {
+        changeLights();
+      }
     }
   }
   printTime();
@@ -52,10 +58,6 @@ void loop() {
       changeLights();
     }
   }
-  //Debug
-  Serial.print("Time Tick: ");
-  Serial.println(currentTimeTick);
-  //
 }
 
 void loopFill(byte arr[]) {
