@@ -37,9 +37,8 @@ void setup() {
   smooth();
   surface.setTitle("Lap Lane Availability");
   
-  printArray(Serial.list());
-  
   int counter = 0;
+  printArray(Serial.list());
   port = new Serial(this, Serial.list()[counter], 9600);
   port.write(65);
   while (port.read() != 'A') {
