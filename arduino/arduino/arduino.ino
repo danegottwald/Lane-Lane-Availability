@@ -24,12 +24,14 @@ byte lane_15[LANE_TIMES];
 byte lane_16[LANE_TIMES];
 
 int currentTimeTick;
+bool night = false;
 
 void setup() {
   Serial.begin(9600);
   setSyncProvider(RTC.get); // Syncs RTC up with time library
   for (int i = 0; i < 16; i++) { // Set pins 2-17 to OUTPUT
     pinMode(i + 2, OUTPUT);
+    //digitalWrite(i + 2, HIGH);
   }
   setCurrentTimeTick();
 }
@@ -43,12 +45,18 @@ void loop() {
       changeLights();
     }
   }
+  //printTime();
   if (minute(t) % 15 == 0 && second(t) == 0) {
     Serial.print("Updating Time Tick at ");
     printTime();
     setCurrentTimeTick();
     if (currentTimeTick >= 0 && currentTimeTick < 54) {
+      night = false;
       changeLights();
+    }
+    else if (night != true){
+      night = true;
+      lightsOut();
     }
   }
 }
@@ -164,6 +172,12 @@ void changeLights() {
   else if (lane_15[currentTimeTick] == 0) digitalWrite(16, LOW);
   if (lane_16[currentTimeTick] == 1) digitalWrite(17, HIGH);  // Lane 16
   else if (lane_16[currentTimeTick] == 0) digitalWrite(17, LOW);
+}
+
+void lightsOut() {
+  for (int i = 0; i < 16; i++) { // Set pins 2-17 to OUTPUT
+    digitalWrite(i + 2, LOW);
+  }
 }
 
 void printTime() {
