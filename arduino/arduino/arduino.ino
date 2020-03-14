@@ -54,7 +54,7 @@ void loop() {
       night = false;
       changeLights();
     }
-    else if (night != true){
+    else if (night != true) {
       night = true;
       lightsOut();
     }
