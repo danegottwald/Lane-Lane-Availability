@@ -32,14 +32,15 @@ byte lane_16[] = new byte[LANE_TIMES];
 String textVal = "Select Lane";
 
 boolean startUp = true;
+boolean copy = false;
 
 void setup() {
   size(1050, 500);
   smooth();
   surface.setTitle("Lap Lane Availability");
   printArray(Serial.list());
-  port = new Serial(this, Serial.list()[Serial.list().length - 1], 9600);
-  println("Successfully connected to Port: " + Serial.list()[Serial.list().length - 1]);
+  port = new Serial(this, Serial.list()[0], 9600);
+  println("Successfully connected to Port: " + Serial.list()[0]);
   font = createFont("Calibri", 13);
   bFont = createFont("Calibri", 16);
   createMainMenu(); 
@@ -211,10 +212,15 @@ void extraButtons() {
     .setFont(bFont)
     .setPosition(230, 225)
     .setSize(50, 25);  
+  cp5.addButton("Copy")
+     .setFont(bFont)
+     .setPosition(290, 225)
+     .setSize(50, 25);
   cp5.addButton("Submit")
     .setFont(bFont)
     .setPosition(460, 425)
     .setSize(130, 50);
+   
 }
 
 void controlEvent(ControlEvent theEvent) {
@@ -235,7 +241,9 @@ void Saturday() {
   if (textVal != "Select Lane") {
     checkbox.deactivateAll();
     for (int i = 6; i < 46; i++) {
-      checkbox.activate(i);
+      if (i != 26 && i != 27) {
+        checkbox.activate(i);
+      }
     }
   }
 }
@@ -253,117 +261,207 @@ void None() {
   checkbox.deactivateAll();
 }
 
+void Copy() {
+  copy = true;
+}
+
+void copyLane(byte arr[]) {
+  copy = false;
+  for (int i = 0; i < LANE_TIMES; i++) {
+    if (arr[i] == 1) {
+      checkbox.activate(i); 
+    }
+  }
+}
+
 void Lane1() {
-  checkbox.deactivateAll();
-  lane = 1;
-  textVal = "Lane 1";
-  activateBoxes(lane_1);
+  if (copy == true) {
+    copyLane(lane_1);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 1;
+    textVal = "Lane 1";
+    activateBoxes(lane_1);
+  }
 }
 
 void Lane2() {
-  checkbox.deactivateAll();
-  lane = 2;
-  textVal = "Lane 2";
-  activateBoxes(lane_2);
+  if (copy == true) {
+    copyLane(lane_2);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 2;
+    textVal = "Lane 2";
+    activateBoxes(lane_2);
+  }
 }
 
 void Lane3() {
-  checkbox.deactivateAll();
-  lane = 3;
-  textVal = "Lane 3";
-  activateBoxes(lane_3);
+  if (copy == true) {
+    copyLane(lane_3);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 3;
+    textVal = "Lane 3";
+    activateBoxes(lane_3);
+  }
 }
 
 void Lane4() {
-  checkbox.deactivateAll();
-  lane = 4;
-  textVal = "Lane 4";
-  activateBoxes(lane_4);
+  if (copy == true) {
+    copyLane(lane_4);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 4;
+    textVal = "Lane 4";
+    activateBoxes(lane_4);
+  }
 }
 
 void Lane5() {
-  checkbox.deactivateAll();
-  lane = 5;
-  textVal = "Lane 5";
-  activateBoxes(lane_5);
+  if (copy == true) {
+    copyLane(lane_5);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 5;
+    textVal = "Lane 5";
+    activateBoxes(lane_5);
+  }
 }
 
 void Lane6() {
-  if (startUp == true) {
-   extraButtons();
+  if (copy == true) {
+    copyLane(lane_6);
   }
-  checkbox.deactivateAll();
-  lane = 6;
-  textVal = "Lane 6";
-  activateBoxes(lane_6);
+  else {
+    checkbox.deactivateAll();
+    lane = 6;
+    textVal = "Lane 6";
+    activateBoxes(lane_6);
+  }
 }
 
 void Lane7() {
-  checkbox.deactivateAll();
-  lane = 7;
-  textVal = "Lane 7";
-  activateBoxes(lane_7);
+  if (copy == true) {
+    copyLane(lane_7);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 7;
+    textVal = "Lane 7";
+    activateBoxes(lane_7);
+  }
 }
 
 void Lane8() {
-  checkbox.deactivateAll();
-  lane = 8;
-  textVal = "Lane 8";
-  activateBoxes(lane_8);
+  if (copy == true) {
+    copyLane(lane_8);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 8;
+    textVal = "Lane 8";
+    activateBoxes(lane_8);
+  }
 }
 
 void Lane9() {
-  checkbox.deactivateAll();
-  lane = 9;
-  textVal = "Lane 9";
-  activateBoxes(lane_9);
+  if (copy == true) {
+    copyLane(lane_9);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 9;
+    textVal = "Lane 9";
+    activateBoxes(lane_9);
+  }
 }
 
 void Lane10() {
-  checkbox.deactivateAll();
-  lane = 10;
-  textVal = "Lane 10";
-  activateBoxes(lane_10);
+  if (copy == true) {
+    copyLane(lane_10);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 10;
+    textVal = "Lane 10";
+    activateBoxes(lane_10);
+  }
 }
 
 void Lane11() {
-  checkbox.deactivateAll();
-  lane = 11;
-  textVal = "Lane 11";
-  activateBoxes(lane_11);
+  if (copy == true) {
+    copyLane(lane_11);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 11;
+    textVal = "Lane 11";
+    activateBoxes(lane_11);
+  }
 }
 
 void Lane12() {
-  checkbox.deactivateAll();
-  lane = 12;
-  textVal = "Lane 12";
-  activateBoxes(lane_12);
+  if (copy == true) {
+    copyLane(lane_12);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 12;
+    textVal = "Lane 12";
+    activateBoxes(lane_12);
+  }
 }
 
 void Lane13() {
-  checkbox.deactivateAll();
-  lane = 13;
-  textVal = "Lane 13";
-  activateBoxes(lane_13);
+  if (copy == true) {
+    copyLane(lane_13);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 13;
+    textVal = "Lane 13";
+    activateBoxes(lane_13);
+  }
 }
 
 void Lane14() {
-  checkbox.deactivateAll();
-  lane = 14;
-  textVal = "Lane 14";
-  activateBoxes(lane_14);
+  if (copy == true) {
+    copyLane(lane_14);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 14;
+    textVal = "Lane 14";
+    activateBoxes(lane_14);
+  }
 }
 
 void Lane15() {
-  checkbox.deactivateAll();
-  lane = 15;
-  textVal = "Lane 15";
-  activateBoxes(lane_15);
+  if (copy == true) {
+    copyLane(lane_15);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 15;
+    textVal = "Lane 15";
+    activateBoxes(lane_15);
+  }
 }
 
 void Lane16() {
-  checkbox.deactivateAll();
-  lane = 16;
-  textVal = "Lane 16";
-  activateBoxes(lane_16);
+  if (copy == true) {
+    copyLane(lane_16);
+  }
+  else {
+    checkbox.deactivateAll();
+    lane = 16;
+    textVal = "Lane 16";
+    activateBoxes(lane_16);
+  }
 }
