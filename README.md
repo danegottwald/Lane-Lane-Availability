@@ -1,5 +1,4 @@
-# Lap-Lane-Availability
-This is a project I worked on to solve an issue that I would consistently encounter when working admissions at my local public swimming pool.
-# Problem
-As an employee, we were given weekly schedules that depicted how the pool would be structure on a day-to-day basis.  One problem with this is that these were only available for us in the office, so numerous times throughout the day I would have visitors ask what parts of the pool were open and it hindered the flow of swimmers into the facility.
-I figured a solution would be a way to broadcast the information we were given to the visitors by creating an arduino powered light board that depicted the open parts of the pool with a simple array of lit and unlit LEDs representing the open and closed parts respectively.
+# Lap Lane Illuminator
+Code behind my custom made Arduino and GUI powered lightboard that displays the currently open parts of my local pool.
+# Background
+As a front desk employee at my local swimming pool, we were given weekly schedules that depicted how the pool would be structured on a day-to-day basis.  One problem with this system is that these schedules were only available for us in the office.  As a result, numerous times throughout the day I would have visitors stop and ask for every section of the pool that were open at that time and future times.  Although this was not an issue in itself to me, I knew many visitors came to the pool to get in, workout, and begin the rest of their day, so I set out to streamline that process.  I figured a solution would be a way to broadcast the information we were given to the visitors by creating an arduino powered lightboard that depicted the open parts of the pool with a simple array of lit and unlit LEDs representing the open and closed parts of the pool respectively.
